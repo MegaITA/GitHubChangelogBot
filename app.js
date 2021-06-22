@@ -25,7 +25,7 @@ bot.on('callback_query:data', (ctx) => {
                 .text(`Accepted by ${ctx.from.first_name}`)
         });
 
-        bot.api.sendMessage(config.bot.channelID, ctx.callbackQuery.message.text);
+        bot.api.sendMessage(config.bot.channelID, ctx.callbackQuery.message.text, { entities: ctx.callbackQuery.message.entities });
 
     } else if(ctx.callbackQuery.data == 'rejected') {
 
