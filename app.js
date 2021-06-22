@@ -1,7 +1,7 @@
 const config = require('./config.json');
 const fastify = require('fastify')({ logger: config.webserver.logging });
 const moment = require('moment');
-const { Bot } = require('grammy');
+const { Bot, InlineKeyboard } = require('grammy');
 
 const bot = new Bot(config.bot.token);
 
@@ -18,6 +18,9 @@ bot.command('start', (ctx) => {
 
 
 bot.use((ctx, next) => {
+
+    if(!(ctx.message?.text?.startsWith('/')))
+        return next();
 
     for(let admin of config.bot.admins) {
 
@@ -46,7 +49,7 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
 
     let message = '';
     
-    message += `<i>✨ 1 nuovo aggioramento alla repo <b>${req.body.repository.name}</b></i>\n\n🌿 Branch: <code>pisnelo</code>\n\n`;
+    message += `<i>✨ 1 nuovo aggioramento alla repo <b>${req.body.repository.name}</b></i>\n\n🌿 Branch: <code>${req.body.ref.split('/')[2]}</code>\n\n`;
 
     for(let commit of req.body.commits) {
 
@@ -55,9 +58,14 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
     }
 
     message += `<b>👤 Autore:</b> <code>${req.body.pusher.name}</code>\n`;
-    message += `<b>📅 Data:</b> <code>${moment(req.body.head_commit.timestamp).format('M/D/YYYY H:mm')}</code>`;
+    message += `<b>📅 Data:</b> <code>${moment(req.body.head_commit.timestamp).format('D/M/YYYY H:mm')}</code>`;
 
-    await bot.api.sendMessage(config.bot.groupID, message, { parse_mode: 'HTML' });
+    await bot.api.sendMessage(config.bot.groupID, message, { 
+        parse_mode: 'HTML', 
+        reply_markup: new InlineKeyboard()
+            .text('✅ Accetta', 'accepted')
+            .text('❌ Rifiuta', 'rejected')
+    });
 
     res.send(200);
 
