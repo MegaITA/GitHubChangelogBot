@@ -11,7 +11,10 @@
 
     "bot": {
 
-        "token": "1845347286:AAGPH1a2lMH2vHvPFcsmiMF4BmWiKjGbaLg"
+        "token": "1845347286:AAGPH1a2lMH2vHvPFcsmiMF4BmWiKjGbaLg",
+        "groupID": -1001254466355,
+        "channelID": "@NadiriaCityGit",
+        "admins": [161936319, 120682201]
 
     }
 

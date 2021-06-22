@@ -3,9 +3,46 @@ const fastify = require('fastify')({ logger: config.webserver.logging });
 const moment = require('moment');
 const { Bot } = require('grammy');
 
-fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
+const bot = new Bot(config.bot.token);
 
-    console.log(req.body);
+// USER COMMANDS
+
+bot.command('start', (ctx) => {
+
+    if(ctx.chat.type != 'private')
+        return;
+
+    ctx.reply(`Benvenuto ${ctx.from.first_name} nel ChangeLog bot di Nadiria.\n\n👨🏻‍💻 Sviluppato da @Mega_01`);
+
+});
+
+
+bot.use((ctx, next) => {
+
+    for(let admin of config.bot.admins) {
+
+        if(admin == ctx.from.id)
+            return next();
+        
+    }
+    
+    ctx.reply('Comando riservato agli admin');
+
+    return false;
+
+});
+
+// ADMIN COMMANDS
+
+bot.command('chatid', (ctx) => {
+
+    ctx.reply(ctx.chat.id);
+
+});
+
+bot.start();
+
+fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
 
     let message = '';
     
@@ -19,6 +56,8 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
 
     message += `<b>👤 Autore:</b> <code>${req.body.pusher.name}</code>\n`;
     message += `<b>📅 Data:</b> <code>${moment(req.body.head_commit.timestamp).format('M/D/YYYY H:mm')}</code>`;
+
+    await bot.api.sendMessage(config.bot.groupID, message, { parse_mode: 'HTML' });
 
     res.send(200);
 
