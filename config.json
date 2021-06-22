@@ -1,0 +1,11 @@
+{
+
+    "webserver": {
+
+        "shouldCloseOnError": true,
+        "webhookEndpoint": "/github",
+        "port": 3434
+    
+    }
+
+}

@@ -1,0 +1,23 @@
+{
+  "name": "githubchangelogbot",
+  "version": "1.0.0",
+  "description": "Simple yet complete GitHub Changelog Bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Glyart/GitHubChangelogBot.git"
+  },
+  "author": "Mega",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Glyart/GitHubChangelogBot/issues"
+  },
+  "homepage": "https://github.com/Glyart/GitHubChangelogBot#readme",
+  "dependencies": {
+    "fastify": "^3.18.0",
+    "grammy": "^1.1.7"
+  }
+}
