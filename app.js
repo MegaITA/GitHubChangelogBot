@@ -63,7 +63,7 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
     
     }
 
-    message += `<b>👤 Autore:</b> <a href="${req.body.sender.url}">${req.body.pusher.name}</a>\n`;
+    message += `<b>👤 Autore:</b> <a href="${req.body.sender.html_url}">${req.body.pusher.name}</a>\n`;
     message += `<b>📅 Data:</b> <code>${moment(req.body.head_commit.timestamp).format('D/M/YYYY H:mm')}</code>`;
 
     await bot.api.sendMessage(config.bot.groupID, message, { 
