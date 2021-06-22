@@ -16,22 +16,17 @@ bot.command('start', (ctx) => {
 
 });
 
+bot.on('callback_query:data', (ctx) => {
 
-bot.use((ctx, next) => {
+    if(ctx.callbackQuery.message == 'accepted') {
 
-    if(!(ctx.message?.text?.startsWith('/')))
-        return next();
+        ctx.answerCallbackQuery('oke');
 
-    for(let admin of config.bot.admins) {
+    } else if(ctx.callbackQuery.message == 'rejected') {
 
-        if(admin == ctx.from.id)
-            return next();
-        
+        ctx.answerCallbackQuery('not oke');
+
     }
-    
-    ctx.reply('Comando riservato agli admin');
-
-    return false;
 
 });
 
