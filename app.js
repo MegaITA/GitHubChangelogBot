@@ -20,16 +20,14 @@ bot.on('callback_query:data', (ctx) => {
 
     if(ctx.callbackQuery.data == 'accepted') {
 
-        ctx.reply('oke');
-
         ctx.editMessageReplyMarkup({ 
             reply_markup: new InlineKeyboard()
                 .text(`Accepted by ${ctx.from.first_name}`)
         });
 
-    } else if(ctx.callbackQuery.data == 'rejected') {
+        bot.api.sendMessage(config.bot.channelID, ctx.callbackQuery.message);
 
-        ctx.reply('not oke');
+    } else if(ctx.callbackQuery.data == 'rejected') {
 
         ctx.editMessageReplyMarkup({ 
             reply_markup: new InlineKeyboard()
