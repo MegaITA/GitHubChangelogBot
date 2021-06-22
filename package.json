@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Glyart/GitHubChangelogBot#readme",
   "dependencies": {
     "fastify": "^3.18.0",
-    "grammy": "^1.1.7"
+    "grammy": "^1.1.7",
+    "moment": "^2.29.1"
   }
 }
