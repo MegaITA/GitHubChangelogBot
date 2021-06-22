@@ -18,15 +18,28 @@ bot.command('start', (ctx) => {
 
 bot.on('callback_query:data', (ctx) => {
 
-    if(ctx.callbackQuery.message == 'accepted') {
+    if(ctx.callbackQuery.data == 'accepted') {
 
-        ctx.answerCallbackQuery('oke');
+        ctx.reply('oke');
 
-    } else if(ctx.callbackQuery.message == 'rejected') {
+        ctx.editMessageReplyMarkup({ 
+            reply_markup: new InlineKeyboard()
+                .text(`Accepted by ${ctx.from.first_name}`)
+        });
 
-        ctx.answerCallbackQuery('not oke');
+    } else if(ctx.callbackQuery.data == 'rejected') {
+
+        ctx.reply('not oke');
+
+        ctx.editMessageReplyMarkup({ 
+            reply_markup: new InlineKeyboard()
+                .text(`Rejected by ${ctx.from.first_name}`)
+        });
 
     }
+
+
+    ctx.answerCallbackQuery();
 
 });
 
