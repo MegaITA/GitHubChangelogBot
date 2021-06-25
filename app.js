@@ -55,7 +55,7 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
 
     let message = '';
     
-    message += `<i>✨ 1 nuovo aggioramento alla repo <b>${req.body.repository.name}</b></i>\n\n🌿 Branch: <code>${req.body.ref.split('/')[2]}</code>\n\n`;
+    message += `<i>✨ 1 nuovo aggioramento alla repo <b>${req.body.repository.name}</b></i>\n\n🌿 Branch: <code>${req.body.ref.split('/').slice(2, req.body.ref.length)}</code>\n\n`;
 
     for(let commit of req.body.commits) {
 
