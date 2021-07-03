@@ -1,77 +1,67 @@
 const config = require('./config.json');
+const language = require(`./lang/${config.bot.language}.json`);
 const fastify = require('fastify')({ logger: config.webserver.logging });
 const moment = require('moment');
-const { Bot, InlineKeyboard } = require('grammy');
+const { Bot, InlineKeyboard, Composer } = require('grammy');
+const MessageBuilder = require('./utils/MessageBuilder');
 
 const bot = new Bot(config.bot.token);
 
-// USER COMMANDS
+// User Commands
 
-bot.command('start', (ctx) => {
+const userCommands = new Composer();
 
-    if(ctx.chat.type != 'private')
-        return;
+userCommands.command('start', require('./commands/Start'));
 
-    ctx.reply(`Benvenuto ${ctx.from.first_name} nel ChangeLog bot di Nadiria.\n\n👨🏻‍💻 Sviluppato da @Mega_01`);
+bot.use(userCommands);
 
-});
+// Admin Commands
 
-bot.on('callback_query:data', (ctx) => {
+const adminCommands = new Composer();
 
-    if(ctx.callbackQuery.data == 'accepted') {
+adminCommands.use((ctx, next) => {
 
-        ctx.editMessageReplyMarkup({ 
-            reply_markup: new InlineKeyboard()
-                .text(`Accepted by ${ctx.from.first_name}`)
-        });
+    if(config.bot.admins.some((admin) => admin == ctx.from?.id))
+        next();
 
-        bot.api.sendMessage(config.bot.channelID, ctx.callbackQuery.message.text, { entities: ctx.callbackQuery.message.entities });
-
-    } else if(ctx.callbackQuery.data == 'rejected') {
-
-        ctx.editMessageReplyMarkup({ 
-            reply_markup: new InlineKeyboard()
-                .text(`Rejected by ${ctx.from.first_name}`)
-        });
-
-    }
-
-
-    ctx.answerCallbackQuery();
+    return;
 
 });
 
-// ADMIN COMMANDS
+adminCommands.on('callback_query:data', require('./callbacks/CallbackHandler'));
 
-bot.command('chatid', (ctx) => {
+adminCommands.command('chatid', require('./commands/ChatID'));
 
-    ctx.reply(ctx.chat.id);
-
-});
+bot.use(adminCommands);
 
 bot.start();
 
 fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
 
-    let message = '';
-    
-    
-    message += `<i>✨ 1 nuovo aggioramento alla repo <b>${req.body.repository.name}</b></i>\n\n🌿 Branch: <code>${req.body.ref.split('/').slice(2, req.body.ref.length).join('/')}</code>\n\n`;
+    let commitMessages = '';
 
     for(let commit of req.body.commits) {
-
-        message += `<i>• ${commit.message}</i>\n\n`;
-    
+        
+        commitMessages += new MessageBuilder(language.commitMessage)
+            .setParam('{commitMessage}', commit.message)
+            .build()
+        
     }
-
-    message += `<b>👤 Autore:</b> <a href="${req.body.sender.html_url}">${req.body.pusher.name}</a>\n`;
-    message += `<b>📅 Data:</b> <code>${moment(req.body.head_commit.timestamp).format('D/M/YYYY H:mm')}</code>`;
+    
+    let message = new MessageBuilder(language.pushMessage)
+        .setParam('{repoName}', req.body.repository.name)
+        .setParam('{branchName}', req.body.ref.split('/').slice(2, req.body.ref.length).join('/'))
+        .setParam('{commitMessages}', commitMessages)
+        .setParam('{userProfileUrl}', req.body.sender.html_url)
+        .setParam('{userProfileName}', req.body.pusher.name)
+        .setParam('{pushDate}', moment(req.body.head_commit.timestamp).format('D/M/YYYY H:mm'))
+        .build()
 
     await bot.api.sendMessage(config.bot.groupID, message, { 
         parse_mode: 'HTML', 
         reply_markup: new InlineKeyboard()
-            .text('✅ Accetta', 'accepted')
-            .text('❌ Rifiuta', 'rejected')
+            .text(language.acceptButton, 'accepted')
+            .text(language.rejectButton, 'rejected')
     });
 
     res.send(200);
@@ -80,7 +70,7 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
 
 fastify.get(config.webserver.webhookEndpoint, async (req, res) => {
 
-    res.send('xQuickGlare è pelato e ne ho le prove');
+    res.send(language.randomMessages[Math.floor(Math.random() * language.randomMessages.length)]);
 
 });
 

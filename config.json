@@ -5,16 +5,17 @@
         "shouldCloseOnError": true,
         "webhookEndpoint": "/github",
         "port": 80,
-        "logging": false
+        "logging": true
     
     },
 
     "bot": {
 
-        "token": "1845347286:AAGPH1a2lMH2vHvPFcsmiMF4BmWiKjGbaLg",
-        "groupID": -1001254466355,
-        "channelID": "@NadiriaCityGit",
-        "admins": [161936319, 120682201]
+        "token": "",
+        "groupID": 0,
+        "channelID": "@",
+        "admins": [0],
+        "language": "it"
 
     }
 

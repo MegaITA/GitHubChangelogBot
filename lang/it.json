@@ -1,6 +1,6 @@
 {
 
-    "pushMessage": "<i>✨ 1 nuovo aggioramento alla repo <b>{repoName}</b></i>\n\n🌿 Branch: <code>{branchName}</code>\n\n{commitMessages}\n\n<b>👤 Autore:</b> <a href=\"{userProfileUrl}\">{userProfileName}</a>\n<b>📅 Data:</b> <code>{pushDate}</code>",
+    "pushMessage": "<i>✨ 1 nuovo aggioramento alla repo <b>{repoName}</b></i>\n\n🌿 Branch: <code>{branchName}</code>\n\n{commitMessages}\n<b>👤 Autore:</b> <a href=\"{userProfileUrl}\">{userProfileName}</a>\n<b>📅 Data:</b> <code>{pushDate}</code>",
 
     "commitMessage": "<i>• {commitMessage}</i>\n",
 
@@ -10,6 +10,11 @@
         "✨Se lo stai leggendo, significa che sai leggere.✨",
         "✨Si, lo so, questi messaggi sono totalmente inutili.✨",
         "👨🏻‍💻 Bot sviluppato da @Mega01"
-    ]
+    ],
+
+    "acceptButton": "✅ Accetta",
+    "rejectButton": "❌ Rifiuta",
+    "statusAcceptedButton": "Accettato da {name}",
+    "statusRejectedButton": "Rifiutato da {name}"
 
 }
