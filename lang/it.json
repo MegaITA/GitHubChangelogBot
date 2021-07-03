@@ -1,0 +1,15 @@
+{
+
+    "pushMessage": "<i>✨ 1 nuovo aggioramento alla repo <b>{repoName}</b></i>\n\n🌿 Branch: <code>{branchName}</code>\n\n{commitMessages}\n\n<b>👤 Autore:</b> <a href=\"{userProfileUrl}\">{userProfileName}</a>\n<b>📅 Data:</b> <code>{pushDate}</code>",
+
+    "commitMessage": "<i>• {commitMessage}</i>\n",
+
+    "randomMessages": [
+        "✨xQuickGlare è pelato e ne abbiamo le prove.✨",
+        "✨La terra è piatta.✨",
+        "✨Se lo stai leggendo, significa che sai leggere.✨",
+        "✨Si, lo so, questi messaggi sono totalmente inutili.✨",
+        "👨🏻‍💻 Bot sviluppato da @Mega01"
+    ]
+
+}
