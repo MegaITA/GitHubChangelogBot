@@ -1,4 +1,7 @@
 const { Composer } = require('grammy');
+const config = require('../config.json');
+const language = require(`../lang/${config.bot.language}.json`);
+const MessageBuilder = require('../utils/MessageBuilder');
 
 module.exports = new Composer().use(
     async (ctx) => {
@@ -6,7 +9,10 @@ module.exports = new Composer().use(
         if(ctx.chat.type != 'private')
             return;
 
-        ctx.reply(`Benvenuto ${ctx.from.first_name} nel ChangeLog bot di Nadiria.\n\n👨🏻‍💻 Sviluppato da @Mega_01`);
+        ctx.reply(new MessageBuilder(language.startMessage)
+            .setParam('{firstName}', ctx.from.first_name)
+            .build()
+        , { parse_mode:'HTML' });
 
     }
 )

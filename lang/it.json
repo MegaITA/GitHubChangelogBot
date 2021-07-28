@@ -6,6 +6,8 @@
     
     "commitMessage": "<i>• {commitMessage}</i>\n",
 
+    "startMessage": "Benvenuto <b>{firstName}</b> nel ChangeLog bot.\n\n👨🏻‍💻 Sviluppato da @Mega_01",
+
     "randomMessages": [
         "✨xQuickGlare è pelato e ne abbiamo le prove.✨",
         "✨La terra è piatta.✨",
