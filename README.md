@@ -1,5 +1,5 @@
 # GitHubChangelogBot
-Simple GitHub changelog bot with some cool features such as:
+Simple Telegram GitHub changelog bot, commonly used in public projects to show progress, with some cool features such as:
 * 🌐 Multi-language support! You can contribute adding your language, just make a PR!
 * ⚙ Extensively configurable, you can tweak basically anything you'll ever need.
 * 🍕 Powered by pizza.
@@ -35,6 +35,20 @@ channelID|String|The channel which the bot will be sending commit messages that 
 admin|Array\<Number\>|An array containing userIDs of those who will be able to execute admin commands on the bot.
 language|String|The language code that directly correseponds with the file name in the languages folder. `Example: lang/it.json -> language: "it"`
 
-## FAQ 
+## GitHub Setup
 
-*wip*
+In order to receive updates from github when a push event is being fired you must configure the webhook properly.
+
+To do so follow these steps:
+- Open the repository you want to get updates from
+- Navigate to the settings
+- Navigate to "Webhook"
+- Click on "Add webhook"
+- In the Payload URL field you have to put the webhook url according to the bot's configuration:  `Example: http://yourdomain.xyz/webhookEndpoint`
+- In the Content type selector choose "application/json"
+- Add secret if you want to
+- Click on the "Add webhook" button
+
+## Telegram Setup
+
+The bot needs to be administrator on both private group and public channel in order to be able to send messages. You must also enable "Allow groups" and disable "Groups privacy" in the Bot Father's bot settings.
