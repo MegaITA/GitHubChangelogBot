@@ -5,7 +5,8 @@
         "shouldCloseOnError": true,
         "webhookEndpoint": "/github",
         "port": 80,
-        "logging": true
+        "logging": true,
+        "secret": "changeme"
     
     },
 

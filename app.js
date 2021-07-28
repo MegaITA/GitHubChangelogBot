@@ -4,6 +4,7 @@ const fastify = require('fastify')({ logger: config.webserver.logging });
 const moment = require('moment');
 const { Bot, InlineKeyboard, Composer } = require('grammy');
 const MessageBuilder = require('./utils/MessageBuilder');
+const crypto = require('crypto');
 
 const bot = new Bot(config.bot.token);
 
@@ -37,6 +38,21 @@ bot.use(adminCommands);
 bot.start();
 
 fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
+
+    // check signature if secret is set in config
+
+    if(config.webserver.secret != "") {
+
+        let requestSignature = req.headers['x-hub-signature-256'];
+        
+        let signature = crypto.createHmac('sha256', config.webserver.secret)
+            .update(JSON.stringify(req.body))
+            .digest('hex');
+    
+        if(requestSignature != signature)
+            return;
+
+    }
 
     if(req.body.zen)
         return await bot.api.sendMessage(
