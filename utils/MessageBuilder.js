@@ -30,7 +30,7 @@ class MessageBuilder {
 
   build() {
 
-      return this.message;
+    return this.message;
 
   }
 

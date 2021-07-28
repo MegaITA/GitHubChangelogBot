@@ -38,6 +38,16 @@ bot.start();
 
 fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
 
+    if(req.body.zen)
+        return await bot.api.sendMessage(
+            config.bot.groupID, 
+            new MessageBuilder(language.newWebhook)
+                .setParam('{repoUrl}', req.body.repository.html_url)
+                .setParam('{repoName}', req.body.repository.name)
+                .build(), 
+            { parse_mode: 'HTML' }
+        );
+
     let commitMessages = '';
 
     for(let commit of req.body.commits) {
