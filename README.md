@@ -28,6 +28,7 @@ shouldCloseOnError|Boolean|Whether the webserver should close on error when star
 webhookEndpoint|String|The endpoint which github will be sending requests to. `Example: http://<your-ip>/webhookEndpoint` `Default: /github`
 port|Number|The port number which the webserver will be listening to
 logging|Boolean|Whether the webserver should be logging requests or not.
+secret|String|The secret key used for validating requests, **recommended**.
 **Bot**||Bot configuration
 token|String|The telegram's bot token
 groupID|Number|The group ID which the bot will be sending *"draft"* commit messages that, if accepted, will be sent to the configured channel. To obtain that you can use the `/chatid` command in the group chat, while the bot is inside and administrator.
@@ -46,7 +47,7 @@ To do so follow these steps:
 - Click on "Add webhook"
 - In the Payload URL field you have to put the webhook url according to the bot's configuration:  `Example: http://yourdomain.xyz/webhookEndpoint`
 - In the Content type selector choose "application/json"
-- Add secret if you want to
+- Add secret if you want to, **recommended**.
 - Click on the "Add webhook" button
 
 ## Telegram Setup
