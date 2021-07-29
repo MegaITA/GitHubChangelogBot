@@ -49,7 +49,7 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
             .update(JSON.stringify(req.body))
             .digest('hex');
     
-        if(requestSignature != signature)
+        if(requestSignature.replace('sha256=', '') != signature)
             return res.send(400);
 
     }
