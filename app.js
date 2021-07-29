@@ -50,7 +50,7 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
             .digest('hex');
     
         if(requestSignature != signature)
-            return;
+            return res.send(400);
 
     }
 
