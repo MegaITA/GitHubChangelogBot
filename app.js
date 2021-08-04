@@ -81,13 +81,18 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
         .setParam('{userProfileUrl}', req.body.sender.html_url)
         .setParam('{userProfileName}', req.body.pusher.name)
         .setParam('{pushDate}', moment(req.body.head_commit.timestamp).format('D/M/YYYY H:mm'))
-        .build()
+
+    if(config.bot.addRepoLinkIfPublic && !req.body.repository.private)
+        message.setParam('{repoUrl}', req.body.repository.html_url);
+
+    message = message.build();
 
     await bot.api.sendMessage(config.bot.groupID, message, { 
         parse_mode: 'HTML', 
         reply_markup: new InlineKeyboard()
             .text(language.acceptButton, 'accepted')
-            .text(language.rejectButton, 'rejected')
+            .text(language.rejectButton, 'rejected'),
+        disable_web_page_preview: !config.bot.repoUrlPreview
     });
 
     res.send(200);

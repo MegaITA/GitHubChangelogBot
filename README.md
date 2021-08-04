@@ -35,6 +35,8 @@ groupID|Number|The group ID which the bot will be sending *"draft"* commit messa
 channelID|String|The channel which the bot will be sending commit messages that were previously accepted. The bot **MUST** be an administrator.
 admin|Array\<Number\>|An array containing userIDs of those who will be able to execute admin commands on the bot.
 language|String|The language code that directly correseponds with the file name in the languages folder. `Example: lang/it.json -> language: "it"`
+repoUrlPreview|Boolean|Determines whether or not the telegram should show the message's links preview
+addRepoLinkIfPublic|Boolean|Whether the bot should add the link to the repository if is public or not.
 
 ## GitHub Setup
 

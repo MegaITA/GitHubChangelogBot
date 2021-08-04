@@ -16,8 +16,12 @@ module.exports = new Composer().use(
                             .build()
                     )
             });
-    
-            ctx.api.sendMessage(config.bot.channelID, ctx.callbackQuery.message.text, { entities: ctx.callbackQuery.message.entities });
+
+            ctx.api.sendMessage(config.bot.channelID, ctx.callbackQuery.message.text, 
+                { 
+                    entities: ctx.callbackQuery.message.entities,
+                    disable_web_page_preview: !config.bot.repoUrlPreview
+                });
     
         } else if(ctx.callbackQuery.data == 'rejected') {
     

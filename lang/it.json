@@ -1,6 +1,6 @@
 {
 
-    "pushMessage": "<i>✨ 1 nuovo aggioramento alla repo <b>{repoName}</b></i>\n\n🌿 Branch: <code>{branchName}</code>\n\n{commitMessages}\n<b>👤 Autore:</b> <a href=\"{userProfileUrl}\">{userProfileName}</a>\n<b>📅 Data:</b> <code>{pushDate}</code>",
+    "pushMessage": "<i>✨ 1 nuovo aggioramento alla repo <a href=\"{repoUrl}\">{repoName}</a></i>\n\n🌿 Branch: <code>{branchName}</code>\n\n{commitMessages}\n<b>👤 Autore:</b> <a href=\"{userProfileUrl}\">{userProfileName}</a>\n<b>📅 Data:</b> <code>{pushDate}</code>",
 
     "newWebhook": "<i>✨ Un nuovo Webhook è stato impostato per la repo</i> <a href=\"{repoUrl}\">{repoName}</a>",
     
