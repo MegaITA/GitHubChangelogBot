@@ -70,7 +70,7 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
     for(let commit of req.body.commits) {
         let message = commit.message;
 
-        if (commit.message.contains("-media")) {
+        if (commit.message.includes("-media")) {
             const split = commit.message.split(' ')
             const index = split.indexOf("-media")
 
