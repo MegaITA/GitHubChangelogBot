@@ -18,7 +18,7 @@ module.exports = new Composer().use(
             });
 
             if (ctx.callbackQuery.message.document) {
-                ctx.api.sendVideo(config.bot.channelID, ctx.callbackQuery.message.document.file_id, 
+                ctx.api.sendDocument(config.bot.channelID, ctx.callbackQuery.message.document.file_id, 
                     { 
                         disable_web_page_preview: !config.bot.repoUrlPreview
                     });
