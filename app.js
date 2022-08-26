@@ -64,12 +64,26 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
             { parse_mode: 'HTML' }
         );
 
+    let medias = [];
     let commitMessages = '';
 
     for(let commit of req.body.commits) {
+        let message = commit.message;
+
+        if (commit.message.includes("-media")) {
+            const split = commit.message.split(' ')
+            const index = split.indexOf("-media")
+
+            message = commit.message.replace('-media', '')
+            if (split.length > index) {
+                message = message.replace(split[index+1], '')
+                medias.push(split[index+1])
+            }
+        }
+
         
         commitMessages += new MessageBuilder(language.commitMessage)
-            .setParam('{commitMessage}', commit.message)
+            .setParam('{commitMessage}', message)
             .build()
         
     }
@@ -94,6 +108,16 @@ fastify.post(config.webserver.webhookEndpoint, async (req, res) => {
             .text(language.rejectButton, 'rejected'),
         disable_web_page_preview: !config.bot.repoUrlPreview
     });
+
+    for (let media of medias) {
+        await bot.api.sendVideo(config.bot.groupID, media, { 
+            parse_mode: 'HTML', 
+            reply_markup: new InlineKeyboard()
+                .text(language.acceptButton, 'accepted')
+                .text(language.rejectButton, 'rejected'),
+            disable_web_page_preview: true
+        });
+    }
 
     res.send(200);
 

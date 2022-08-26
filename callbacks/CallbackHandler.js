@@ -17,6 +17,14 @@ module.exports = new Composer().use(
                     )
             });
 
+            if (ctx.callbackQuery.message.document) {
+                ctx.api.sendDocument(config.bot.channelID, ctx.callbackQuery.message.document.file_id, 
+                    { 
+                        disable_web_page_preview: !config.bot.repoUrlPreview
+                    });
+                return;
+            }
+
             ctx.api.sendMessage(config.bot.channelID, ctx.callbackQuery.message.text, 
                 { 
                     entities: ctx.callbackQuery.message.entities,
